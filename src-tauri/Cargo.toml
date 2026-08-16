@@ -1,0 +1,39 @@
+[package]
+name = "hesabyar"
+version = "0.1.0"
+description = "HesabYar - Free Persian Accounting App"
+authors = ["hesabyar"]
+edition = "2021"
+# `cargo run` (used by `tauri dev`) defaults to the first [[bin]]
+# in the file. With multiple smoke-test binaries we have to pick
+# the real Tauri host explicitly.
+default-run = "hesabyar"
+
+[lib]
+name = "hesabyar_lib"
+crate-type = ["lib", "cdylib", "staticlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["devtools"] }
+tauri-plugin-shell = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+rusqlite = { version = "0.31", features = ["bundled", "backup"] }
+chrono = "0.4"
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls", "blocking"] }
+rsa = { version = "0.9", features = ["sha2"] }
+aes-gcm = "0.10"
+sha2 = "0.10"
+base64 = "0.22"
+uuid = { version = "1", features = ["v4"] }
+rand = "0.8"
+pbkdf2 = { version = "0.12", features = ["simple"] }
+hmac = "0.12"
+encoding_rs = "0.8"
+
+[features]
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]

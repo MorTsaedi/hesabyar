@@ -1,0 +1,278 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---- Color tokens (light) ---- */
+:root {
+  --c-slate-50: 248 250 252;
+  --c-slate-100: 241 245 249;
+  --c-slate-200: 226 232 240;
+  --c-slate-300: 203 213 225;
+  --c-slate-400: 148 163 184;
+  --c-slate-500: 100 116 139;
+  --c-slate-600: 71 85 105;
+  --c-slate-700: 51 65 85;
+  --c-slate-800: 30 41 59;
+  --c-slate-900: 15 23 42;
+  --c-slate-950: 2 6 23;
+}
+
+/* ---- Color tokens (dark) ---- */
+.dark {
+  --c-slate-50: 26 36 56;
+  --c-slate-100: 35 48 72;
+  --c-slate-200: 38 52 80;
+  --c-slate-300: 51 66 95;
+  --c-slate-400: 109 127 153;
+  --c-slate-500: 143 160 184;
+  --c-slate-600: 168 182 204;
+  --c-slate-700: 203 213 225;
+  --c-slate-800: 226 232 240;
+  --c-slate-900: 241 245 249;
+  --c-slate-950: 248 250 252;
+}
+
+/* Vazirmatn Persian Font - Bundled locally for offline use */
+@font-face {
+  font-family: 'Vazirmatn';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/Vazirmatn/Vazirmatn-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Vazirmatn';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/Vazirmatn/Vazirmatn-Medium.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Vazirmatn';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/Vazirmatn/Vazirmatn-Bold.ttf') format('truetype');
+}
+
+/* Base RTL */
+html {
+  direction: rtl;
+}
+
+body {
+  font-family: 'Vazirmatn', 'IRANSans', 'Tahoma', system-ui, sans-serif;
+  background-color: #f6f7fb;
+  color: #0f172a;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Persian number display */
+.persian-num {
+  font-feature-settings: "ss01";
+}
+
+/* Custom scrollbar - thinner, softer */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* RTL overrides */
+[dir="rtl"] .ltr-force {
+  direction: ltr;
+  text-align: left;
+}
+
+/* Chart container fix - ensure charts fill their containers */
+.chart-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.chart-container canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Performance: reduce animation for old hardware */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Smooth transitions - only for modern browsers */
+@supports (transition: all 0.2s ease) {
+  .smooth-transition {
+    transition: all 0.2s ease;
+  }
+}
+
+/* ---- Design system helpers ---- */
+
+@layer components {
+  /* Card surface */
+  .card {
+    @apply bg-white rounded-2xl border border-slate-200/80 shadow-card;
+  }
+
+  /* Form label */
+  .form-label {
+    @apply block text-[13px] font-medium text-slate-600 mb-1.5;
+  }
+
+  /* Small caps section title */
+  .section-title {
+    @apply text-xs font-bold text-slate-400 uppercase tracking-wide;
+  }
+
+  /* Table wrapper for report tables */
+  .table-card {
+    @apply card overflow-hidden;
+  }
+
+  .table-card table {
+    @apply w-full text-sm;
+  }
+
+  .table-card thead th {
+    @apply text-right px-4 py-3 bg-slate-50/80 text-slate-500 text-xs font-bold whitespace-nowrap border-b border-slate-200/80;
+  }
+
+  .table-card tbody td {
+    @apply px-4 py-2.5 border-b border-slate-100 text-slate-700 whitespace-nowrap;
+  }
+
+  .table-card tbody tr:hover {
+    @apply bg-brand-50/40;
+  }
+
+  .table-card tbody tr:last-child td {
+    @apply border-b-0;
+  }
+}
+
+/* Subtle background grid for hero areas */
+.hero-grid {
+  background-image:
+    linear-gradient(to left, rgb(13 148 136 / 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(13 148 136 / 0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* ============================================================
+   DARK THEME
+   The app shell uses semantic `dark:` variants; these global
+   overrides retrofit the many pages that use plain light-
+   utilities (bg-white, text-slate-*, border-slate-*, …) so the
+   whole app renders correctly in dark mode.
+   ============================================================ */
+.dark {
+  color-scheme: dark;
+}
+
+.dark body {
+  background-color: #0b1120;
+  color: #e2e8f0;
+}
+
+/* --- Surfaces --- */
+.dark .bg-white { background-color: #131c31; }
+.dark .bg-surface { background-color: #0b1120; }
+.dark .bg-surface-elevated { background-color: #131c31; }
+
+/* --- Dark backdrops must stay dark (slate-900/950 is inverted for text) --- */
+.dark .bg-slate-900\/50 { background-color: rgb(2 6 23 / 0.55); }
+.dark .bg-slate-950\/70 { background-color: rgb(2 6 23 / 0.75); }
+
+/* --- Brand tints (active nav, badges, pills) --- */
+.dark .bg-brand-50 { background-color: rgb(13 148 136 / 0.14); }
+.dark .text-brand-700 { color: #5eead4; }
+.dark .text-brand-800 { color: #99f6e4; }
+.dark .text-brand-600 { color: #2dd4bf; }
+.dark .border-brand-200 { border-color: rgb(45 212 191 / 0.3); }
+.dark .border-brand-300 { border-color: rgb(45 212 191 / 0.45); }
+
+/* --- Primary (indigo) tints --- */
+.dark .bg-primary-50 { background-color: rgb(99 102 241 / 0.15); }
+.dark .bg-primary-100 { background-color: rgb(99 102 241 / 0.22); }
+.dark .text-primary-700 { color: #a5b4fc; }
+.dark .text-primary-600 { color: #818cf8; }
+.dark .border-primary-300 { border-color: rgb(99 102 241 / 0.45); }
+
+/* --- Semantic color tints (KPI cards, badges) --- */
+.dark .bg-emerald-50 { background-color: rgb(16 185 129 / 0.12); }
+.dark .text-emerald-700 { color: #6ee7b7; }
+.dark .text-emerald-600 { color: #34d399; }
+.dark .border-emerald-200 { border-color: rgb(16 185 129 / 0.3); }
+.dark .bg-rose-50 { background-color: rgb(244 63 94 / 0.12); }
+.dark .text-rose-700 { color: #fda4af; }
+.dark .text-rose-600 { color: #fb7185; }
+.dark .border-rose-200 { border-color: rgb(244 63 94 / 0.3); }
+.dark .bg-amber-50 { background-color: rgb(245 158 11 / 0.12); }
+.dark .text-amber-700 { color: #fcd34d; }
+.dark .text-amber-600 { color: #fbbf24; }
+.dark .border-amber-200 { border-color: rgb(245 158 11 / 0.3); }
+.dark .bg-blue-50 { background-color: rgb(59 130 246 / 0.12); }
+.dark .text-blue-700 { color: #93c5fd; }
+.dark .text-blue-600 { color: #60a5fa; }
+.dark .border-blue-200 { border-color: rgb(59 130 246 / 0.3); }
+.dark .bg-violet-50 { background-color: rgb(139 92 246 / 0.12); }
+.dark .text-violet-700 { color: #c4b5fd; }
+.dark .text-violet-600 { color: #a78bfa; }
+.dark .border-violet-200 { border-color: rgb(139 92 246 / 0.3); }
+.dark .bg-purple-50 { background-color: rgb(139 92 246 / 0.12); }
+.dark .text-purple-700 { color: #c4b5fd; }
+.dark .text-purple-600 { color: #a78bfa; }
+.dark .border-purple-200 { border-color: rgb(139 92 246 / 0.3); }
+.dark .bg-red-50 { background-color: rgb(244 63 94 / 0.12); }
+.dark .text-red-700 { color: #fda4af; }
+.dark .text-red-600 { color: #fb7185; }
+
+/* --- Design-system components (defined in @layer components) --- */
+.dark .card {
+  background-color: #131c31;
+  border-color: #263450;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+}
+.dark .table-card thead th {
+  background-color: #1a2438;
+  color: #8fa0b8;
+  border-color: #263450;
+}
+.dark .table-card tbody td {
+  border-color: #22304a;
+  color: #cbd5e1;
+}
+.dark .table-card tbody tr:hover {
+  background-color: rgb(13 148 136 / 0.07);
+}
+
+/* Scrollbar in dark */
+.dark ::-webkit-scrollbar-thumb {
+  background: #33425f;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}

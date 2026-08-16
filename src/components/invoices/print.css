@@ -1,0 +1,463 @@
+/*
+ * Invoice Print Styles
+ *
+ * Two layouts:
+ *   - .invoice-print--a4      → A4 portrait, screen-rendered then printed
+ *   - .invoice-print--thermal → 80 mm thermal receipt
+ *
+ * On screen we render BOTH layouts at full paper size (210 mm wide for A4,
+ * 80 mm wide for thermal) inside a scrollable modal. On print we hide
+ * the modal chrome and only print the active layout.
+ */
+
+/* Shared base ------------------------------------------------------- */
+
+.invoice-print {
+  font-family: 'Vazirmatn', 'Tahoma', system-ui, sans-serif;
+  color: #111827;
+  background: #ffffff;
+  line-height: 1.55;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+
+.invoice-print *,
+.invoice-print *::before,
+.invoice-print *::after {
+  box-sizing: border-box;
+}
+
+.invoice-print h1,
+.invoice-print h2,
+.invoice-print h3,
+.invoice-print p {
+  margin: 0;
+}
+
+.invoice-print table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.invoice-print th,
+.invoice-print td {
+  padding: 6px 8px;
+  vertical-align: top;
+  text-align: right;
+}
+
+/* A4 layout --------------------------------------------------------- */
+
+.invoice-print--a4 {
+  width: 210mm;
+  min-height: 297mm;
+  padding: 15mm;
+  margin: 0 auto;
+  font-size: 12pt;
+}
+
+.invoice-print--a4 .invoice-print__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 2px solid #1f2937;
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+  gap: 16px;
+}
+
+.invoice-print--a4 .invoice-print__company-name {
+  font-size: 18pt;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.invoice-print--a4 .invoice-print__company-meta {
+  font-size: 10pt;
+  color: #4b5563;
+  line-height: 1.7;
+}
+
+.invoice-print--a4 .invoice-print__title-block {
+  text-align: left;
+}
+
+.invoice-print--a4 .invoice-print__title {
+  font-size: 16pt;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #1e40af;
+}
+
+.invoice-print--a4 .invoice-print__meta-table th {
+  font-weight: 600;
+  color: #4b5563;
+  padding: 2px 12px 2px 0;
+  text-align: right;
+}
+
+.invoice-print--a4 .invoice-print__meta-table td {
+  padding: 2px 0;
+  text-align: left;
+  min-width: 90px;
+}
+
+.invoice-print--a4 .invoice-print__parties {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.invoice-print--a4 .invoice-print__party {
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+
+.invoice-print--a4 .invoice-print__party-title {
+  font-size: 11pt;
+  font-weight: 700;
+  color: #1e40af;
+  margin-bottom: 6px;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 4px;
+}
+
+.invoice-print--a4 .invoice-print__party-name {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.invoice-print--a4 .invoice-print__party-body {
+  font-size: 10pt;
+  color: #374151;
+  line-height: 1.7;
+}
+
+.invoice-print--a4 .invoice-print__table {
+  margin-top: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 10.5pt;
+}
+
+.invoice-print--a4 .invoice-print__table thead th {
+  background: #1e40af;
+  color: #ffffff;
+  font-weight: 600;
+  padding: 8px;
+  border: 1px solid #1e3a8a;
+}
+
+.invoice-print--a4 .invoice-print__table tbody td {
+  border: 1px solid #e5e7eb;
+  padding: 6px 8px;
+}
+
+.invoice-print--a4 .invoice-print__cell-text {
+  text-align: right;
+  word-break: break-word;
+}
+
+.invoice-print--a4 .invoice-print__table tbody tr:nth-child(even) {
+  background: #f9fafb;
+}
+
+.invoice-print--a4 .invoice-print__totals {
+  margin-top: 16px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.invoice-print--a4 .invoice-print__totals table {
+  width: 50%;
+  font-size: 11pt;
+}
+
+.invoice-print--a4 .invoice-print__totals th {
+  font-weight: 600;
+  text-align: right;
+  padding: 6px 12px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.invoice-print--a4 .invoice-print__totals td {
+  text-align: left;
+  padding: 6px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.invoice-print--a4 .invoice-print__grand-total th,
+.invoice-print--a4 .invoice-print__grand-total td {
+  font-size: 13pt;
+  font-weight: 700;
+  color: #1e40af;
+  background: #eff6ff;
+  padding: 10px 12px;
+  border-bottom: none;
+}
+
+.invoice-print--a4 .invoice-print__notes {
+  margin-top: 20px;
+  padding: 10px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #f9fafb;
+}
+
+.invoice-print--a4 .invoice-print__notes-title {
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.invoice-print--a4 .invoice-print__signatures {
+  margin-top: 36px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.invoice-print--a4 .invoice-print__signature {
+  text-align: center;
+}
+
+.invoice-print--a4 .invoice-print__signature-line {
+  border-top: 1px solid #111827;
+  margin-bottom: 4px;
+  padding-top: 4px;
+}
+
+.invoice-print--a4 .invoice-print__signature-label {
+  font-size: 10pt;
+  color: #4b5563;
+}
+
+.invoice-print--a4 .invoice-print__footer-note {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 9pt;
+  color: #6b7280;
+}
+
+/* Thermal layout (80 mm) ------------------------------------------- */
+
+.invoice-print--thermal {
+  width: 80mm;
+  padding: 4mm;
+  margin: 0 auto;
+  font-size: 10pt;
+  font-family: 'Vazirmatn', 'Tahoma', monospace;
+}
+
+.invoice-print--thermal .invoice-print__header {
+  text-align: center;
+  border-bottom: 1px dashed #000;
+  padding-bottom: 6px;
+  margin-bottom: 8px;
+}
+
+.invoice-print--thermal .invoice-print__company-name {
+  font-size: 13pt;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.invoice-print--thermal .invoice-print__company-meta {
+  font-size: 9pt;
+  line-height: 1.5;
+}
+
+.invoice-print--thermal .invoice-print__title-block {
+  margin-top: 8px;
+  border-top: 1px dashed #000;
+  padding-top: 6px;
+}
+
+.invoice-print--thermal .invoice-print__title {
+  font-size: 12pt;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.invoice-print--thermal .invoice-print__meta-table th {
+  font-weight: 600;
+  padding: 1px 6px 1px 0;
+  font-size: 9pt;
+  text-align: right;
+}
+
+.invoice-print--thermal .invoice-print__meta-table td {
+  padding: 1px 0;
+  font-size: 9pt;
+  text-align: left;
+}
+
+.invoice-print--thermal .invoice-print__parties {
+  display: block;
+  margin-bottom: 8px;
+  border-bottom: 1px dashed #000;
+  padding-bottom: 6px;
+}
+
+.invoice-print--thermal .invoice-print__party {
+  margin-bottom: 6px;
+}
+
+.invoice-print--thermal .invoice-print__party-title {
+  font-size: 9pt;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.invoice-print--thermal .invoice-print__party-body {
+  font-size: 9pt;
+  line-height: 1.5;
+}
+
+.invoice-print--thermal .invoice-print__party-name {
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.invoice-print--thermal .invoice-print__table {
+  font-size: 9pt;
+  margin-bottom: 8px;
+}
+
+.invoice-print--thermal .invoice-print__table thead th {
+  background: #000;
+  color: #fff;
+  padding: 3px 4px;
+  font-weight: 700;
+  font-size: 9pt;
+}
+
+.invoice-print--thermal .invoice-print__table tbody td {
+  padding: 3px 4px;
+  border-bottom: 1px dotted #999;
+}
+
+.invoice-print--thermal .invoice-print__totals {
+  border-top: 1px dashed #000;
+  padding-top: 6px;
+  margin-top: 6px;
+}
+
+.invoice-print--thermal .invoice-print__totals th {
+  font-weight: 600;
+  padding: 2px 4px;
+  font-size: 9pt;
+  text-align: right;
+}
+
+.invoice-print--thermal .invoice-print__totals td {
+  text-align: left;
+  padding: 2px 4px;
+  font-size: 9pt;
+}
+
+.invoice-print--thermal .invoice-print__grand-total th,
+.invoice-print--thermal .invoice-print__grand-total td {
+  font-size: 11pt;
+  font-weight: 700;
+  border-top: 1px solid #000;
+  padding-top: 4px;
+}
+
+.invoice-print--thermal .invoice-print__notes {
+  border-top: 1px dashed #000;
+  padding-top: 4px;
+  margin-top: 6px;
+  font-size: 9pt;
+}
+
+.invoice-print--thermal .invoice-print__notes-title {
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.invoice-print--thermal .invoice-print__signatures {
+  display: none;
+}
+
+.invoice-print--thermal .invoice-print__footer-note {
+  margin-top: 8px;
+  text-align: center;
+  font-size: 8pt;
+  border-top: 1px dashed #000;
+  padding-top: 4px;
+}
+
+/* Screen wrapper (so the modal can preview both layouts) ----------- */
+
+.invoice-print-preview {
+  background: #f1f5f9;
+  padding: 24px 16px;
+  overflow-y: auto;
+  max-height: 75vh;
+}
+
+.invoice-print-preview--thermal {
+  background: #1f2937;
+}
+
+/* Print media: hide everything except the active invoice ----------- */
+
+@media print {
+  /* Hide the entire app chrome when printing */
+  body * {
+    visibility: hidden;
+  }
+
+  .invoice-print,
+  .invoice-print * {
+    visibility: visible;
+  }
+
+  /* The modal wrapper may use position:fixed — make the invoice visible */
+  .invoice-print-preview,
+  .invoice-print-preview * {
+    visibility: visible;
+  }
+
+  .invoice-print-preview {
+    background: transparent !important;
+    padding: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    position: static !important;
+  }
+
+  /* The active invoice should fill the page */
+  .invoice-print {
+    position: absolute;
+    inset: 0;
+    margin: 0 auto !important;
+    box-shadow: none !important;
+  }
+
+  .invoice-print--a4 {
+    width: 210mm;
+    min-height: 297mm;
+    page-break-after: always;
+  }
+
+  .invoice-print--thermal {
+    width: 80mm;
+    page-break-after: always;
+  }
+
+  /* Hide every invoice that isn't the active layout */
+  .invoice-print:not([data-active='true']) {
+    display: none !important;
+  }
+
+  @page {
+    margin: 0;
+  }
+
+  @page :first {
+    margin: 0;
+  }
+}
