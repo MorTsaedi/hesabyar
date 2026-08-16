@@ -26,6 +26,9 @@
 
 </div>
 
+![terminal](https://i.ibb.co/svpFjhQM/Screenshot-2026-08-16-at-19-14-45.png)
+![terminal](https://i.ibb.co/9H8LWhsB/Screenshot-2026-08-16-at-19-15-25.png)
+
 ---
 
 ## فهرست مطالب
