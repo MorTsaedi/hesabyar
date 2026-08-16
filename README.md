@@ -1,6 +1,10 @@
 # HesabYar (حساب‌یار) 🧾
 **A free, open-source Persian accounting desktop app built with Tauri + React + Rust.**
 
+<p align="center">
+  <img src="./public/logo.png" alt="HesabYar logo" width="180" />
+</p>
+
 HesabYar is a fully offline, double-entry accounting suite for Iranian
 businesses, shopkeepers, freelancers and accounting firms. It is Persian from
 the ground up — RTL layout, Jalali (Shamsi) dates, Persian numerals and
