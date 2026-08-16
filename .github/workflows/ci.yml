@@ -43,3 +43,7 @@ jobs:
       - name: Check Rust backend
         working-directory: src-tauri
         run: cargo check
+
+      - name: Check Rust smoke tests
+        working-directory: src-tauri
+        run: cargo check --features smoke-tests

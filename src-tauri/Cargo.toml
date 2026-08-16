@@ -37,3 +37,47 @@ encoding_rs = "0.8"
 [features]
 default = ["custom-protocol"]
 custom-protocol = ["tauri/custom-protocol"]
+# Smoke tests are separate binaries. Gate them behind this feature so `tauri
+# build` and a plain `cargo build` skip them, and so the bundler does not try
+# to ship them inside the app bundle.
+smoke-tests = []
+
+[[bin]]
+name = "banking_smoke_test"
+path = "src/bin/banking_smoke_test.rs"
+required-features = ["smoke-tests"]
+
+[[bin]]
+name = "backup_smoke_test"
+path = "src/bin/backup_smoke_test.rs"
+required-features = ["smoke-tests"]
+
+[[bin]]
+name = "cashflow_smoke_test"
+path = "src/bin/cashflow_smoke_test.rs"
+required-features = ["smoke-tests"]
+
+[[bin]]
+name = "currency_smoke_test"
+path = "src/bin/currency_smoke_test.rs"
+required-features = ["smoke-tests"]
+
+[[bin]]
+name = "inventory_smoke_test"
+path = "src/bin/inventory_smoke_test.rs"
+required-features = ["smoke-tests"]
+
+[[bin]]
+name = "moadian_smoke_test"
+path = "src/bin/moadian_smoke_test.rs"
+required-features = ["smoke-tests"]
+
+[[bin]]
+name = "new_modules_smoke_test"
+path = "src/bin/new_modules_smoke_test.rs"
+required-features = ["smoke-tests"]
+
+[[bin]]
+name = "tax_smoke_test"
+path = "src/bin/tax_smoke_test.rs"
+required-features = ["smoke-tests"]
