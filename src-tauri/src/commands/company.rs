@@ -108,11 +108,14 @@ pub fn update_company(
 ) -> Result<(), String> {
     db.update_company(
         id, &name,
+        None,
         national_id.as_deref(),
         economic_code.as_deref(),
         registration_number.as_deref(),
-        address.as_deref(), phone.as_deref(),
-        email.as_deref(), website.as_deref(),
+        address.as_deref(),
+        phone.as_deref(),
+        email.as_deref(),
+        website.as_deref(),
     ).map_err(|e| e.to_string())
 }
 

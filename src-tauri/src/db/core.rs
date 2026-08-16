@@ -77,6 +77,7 @@ impl Database {
             "022_voucher_schema_fix",
             "023_tax_returns_schema_fix",
             "024_backups",
+            "025_company_ext",
         ];
 
         for migration in migrations {
@@ -114,6 +115,7 @@ impl Database {
                     "022_voucher_schema_fix" => include_str!("../../../database/migrations/022_voucher_schema_fix.sql"),
                     "023_tax_returns_schema_fix" => include_str!("../../../database/migrations/023_tax_returns_schema_fix.sql"),
                     "024_backups" => include_str!("../../../database/migrations/024_backups.sql"),
+                    "025_company_ext" => include_str!("../../../database/migrations/025_company_ext.sql"),
                     _ => "",
                 };
 

@@ -77,13 +77,14 @@ impl Database {
 
     pub fn update_company(&self, id: i64, name: &str, legal_name: Option<&str>,
         national_id: Option<&str>, economic_code: Option<&str>, registration_number: Option<&str>,
-        address: Option<&str>, phone: Option<&str>, email: Option<&str>) -> Result<()> {
+        address: Option<&str>, phone: Option<&str>, email: Option<&str>,
+        website: Option<&str>) -> Result<()> {
         let conn = self.conn.lock().unwrap();
         conn.execute(
             "UPDATE companies SET name=?1, legal_name=?2, national_id=?3, economic_code=?4,
-             registration_number=?5, address=?6, phone=?7, email=?8 WHERE id=?9",
+             registration_number=?5, address=?6, phone=?7, email=?8, website=?9 WHERE id=?10",
             params![name, legal_name, national_id, economic_code, registration_number,
-                    address, phone, email, id],
+                    address, phone, email, website, id],
         )?;
         Ok(())
     }
@@ -106,7 +107,7 @@ impl Database {
         let start = format!("{}/01/01", year);
         let end = format!("{}/12/29", year);
         conn.execute(
-            "INSERT INTO fiscal_years (company_id, year, is_active, start_date, end_date) VALUES (?1, ?2, 1, ?3, ?4)",
+            "INSERT INTO fiscal_years (company_id, name, start_date, end_date) VALUES (?1, ?2, ?3, ?4)",
             params![company_id, year, start, end],
         )?;
         let id = conn.last_insert_rowid();
@@ -116,20 +117,20 @@ impl Database {
     pub fn seed_accounts_for_company(&self, company_id: i64) -> Result<()> {
         let conn = self.conn.lock().unwrap();
         let accounts = vec![
-            (company_id, "1", "دارایی‌ها", 0, None, "asset"),
-            (company_id, "1-1", "دارایی‌های جاری", 1, Some("asset"), "asset"),
-            (company_id, "1-1-01", "صندوق", 2, Some("asset"), "asset"),
-            (company_id, "1-1-02", "بانک", 2, Some("asset"), "asset"),
-            (company_id, "1-1-03", "حساب‌های دریافتنی", 2, Some("asset"), "asset"),
-            (company_id, "2", "بدهی‌ها", 0, None, "liability"),
-            (company_id, "2-1", "بدهی‌های جاری", 1, Some("liability"), "liability"),
-            (company_id, "2-1-01", "حساب‌های پرداختنی", 2, Some("liability"), "liability"),
-            (company_id, "3", "سرمایه", 0, None, "equity"),
-            (company_id, "3-1-01", "سرمایه", 2, Some("equity"), "equity"),
-            (company_id, "4", "درآمدها", 0, None, "revenue"),
-            (company_id, "4-1-01", "فروش کالا", 2, Some("revenue"), "revenue"),
-            (company_id, "5", "هزینه‌ها", 0, None, "expense"),
-            (company_id, "5-1-01", "هزینه اداری", 2, Some("expense"), "expense"),
+            (company_id, "1", "دارایی‌ها", 1, None, "asset"),
+            (company_id, "1-1", "دارایی‌های جاری", 2, Some("asset"), "asset"),
+            (company_id, "1-1-01", "صندوق", 3, Some("asset"), "asset"),
+            (company_id, "1-1-02", "بانک", 3, Some("asset"), "asset"),
+            (company_id, "1-1-03", "حساب‌های دریافتنی", 3, Some("asset"), "asset"),
+            (company_id, "2", "بدهی‌ها", 1, None, "liability"),
+            (company_id, "2-1", "بدهی‌های جاری", 2, Some("liability"), "liability"),
+            (company_id, "2-1-01", "حساب‌های پرداختنی", 3, Some("liability"), "liability"),
+            (company_id, "3", "سرمایه", 1, None, "equity"),
+            (company_id, "3-1-01", "سرمایه", 3, Some("equity"), "equity"),
+            (company_id, "4", "درآمدها", 1, None, "revenue"),
+            (company_id, "4-1-01", "فروش کالا", 3, Some("revenue"), "revenue"),
+            (company_id, "5", "هزینه‌ها", 1, None, "expense"),
+            (company_id, "5-1-01", "هزینه اداری", 3, Some("expense"), "expense"),
         ];
         for (cid, code, name, level, _parent_type, acc_type) in accounts {
             let _parent_id: Option<i64> = None; // Simplified
