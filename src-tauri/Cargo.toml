@@ -1,6 +1,6 @@
 [package]
 name = "hesabyar"
-version = "0.1.0"
+version = "0.1.1"
 description = "HesabYar - Free Persian Accounting App"
 authors = ["hesabyar"]
 edition = "2021"
