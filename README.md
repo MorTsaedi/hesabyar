@@ -205,7 +205,7 @@ end
 subgraph Ext["External"]
 MO[Moadian API]
 end
-P -->|invoke()| CMD
+P -->|invoke| CMD
 S --> P
 C --> P
 CMD --> DB
